@@ -11,7 +11,7 @@ echo ""
 echo ""
 
 DL_GERDSWERK="https://www.google.com/maps/d/kml?mid=1L-gatZq7W4lZzdrfLLAK3AVUoc8lKNo&femb=1&ll=50.36612061088382%2C10.627823200000002&z=6"
-MAP_DIR="/opt/map_data"
+MAP_DIR="/opt/gerds_daten"
 KMZ_FILE="gerds.kmz"
 DL_KML2DB="https://raw.githubusercontent.com/zzzkeil/ladefreunde/refs/heads/main/python/kml2db.py"
 DL_FETCH="https://raw.githubusercontent.com/zzzkeil/ladefreunde/refs/heads/main/python/fetchstreetcity.py"
