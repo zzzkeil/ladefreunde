@@ -59,19 +59,16 @@ if [ $? -ne 0 ]; then
     rm -f "$KMZ_FILE"
     exit 1
 fi
-rm -f "$KMZ_FILE"
+rm -f "$MAP_DIR/$KMZ_FILE"
 
 # checken op die DB Daten angepasst wurden
 target_content="\"password\": \"das_sichere_passwort\""
-if grep -q "$target_content" ""$MAP_DIR/kml2db.py"" && grep -q "$target_content" "$MAP_DIR/fetchstreetcity.py"; then
+if grep -q "$target_content" "$MAP_DIR/kml2db.py" && grep -q "$target_content" "$MAP_DIR/fetchstreetcity.py"; then
     echo ""
     echo "Stop! Du musst erst deine Datenbank Daten eintragen."
     echo "Hier - $MAP_DIR/kml2db.py und $MAP_DIR/fetchstreetcity.py"
     echo ""
     exit 1
-else
-    exit 0
-fi
 
 set -e   #halten bei fehler
 cd $MAP_DIR
