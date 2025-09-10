@@ -65,10 +65,12 @@ rm -f "$MAP_DIR/$KMZ_FILE"
 target_content="\"password\": \"das_sichere_passwort\""
 error=0
 if grep -q "$target_content" "$MAP_DIR/kml2db.py"; then
+    echo ""
     echo "$MAP_DIR/kml2db.py enthält noch DB Login Platzhalter"
     error=1
 fi
 if grep -q "$target_content" "$MAP_DIR/fetchstreetcity.py"; then
+    echo ""
     echo "$MAP_DIR/fetchstreetcity.py enthält noch DB Login Platzhalter"
     error=1
 fi
