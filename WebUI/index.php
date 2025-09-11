@@ -27,7 +27,7 @@ if (!isset($_SESSION['discord_user'])) {
 <body class="login-body">
     <div class="login-container">
         <h1>Ladefreunde Event Map</h1>
-        <p>Zugang zur Planung mitc Discord Account.<br>Bitte über Discord einloggen.</p>
+        <p>Zugang zur Planung mit Discord Account.<br>Bitte über Discord einloggen.</p>
         <a href="<?php echo $authUrl; ?>" class="discord-login-button">Login mit Discord</a>
     </div>
 </body>
