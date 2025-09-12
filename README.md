@@ -5,16 +5,13 @@ Beschreibung usw. kommt noch ......
 
 
     Erledigt:
-    Geplante Events anzeigen.
-    Nur für Discord User auf definieren Servern? (Spam Schutz)
-
+    ✅ Geplante Events anzeigen.
+    ✅ Nur für Discord User auf definieren Servern? (Spam Schutz)
+    ✅ DSGVO...... 
 
     ToDo:
     Preisfilter wenn ich die Daten gefiltert bekomme.
-    DSGVO......
-
-
-
+    
 
 mfg
 keil
