@@ -4,15 +4,13 @@ Aus der Gerd Bremer Ad Hoc Map, Laaaadeerleeebnis :)  mit Discord planen ....
 Beschreibung usw. kommt noch ......
 
 
+    Erledigt:
+    Geplante Events anzeigen.
+    Nur für Discord User auf definieren Servern? (Spam Schutz)
+
 
     ToDo:
-geplante Events anzeigen.
-
-Nur für Discord User auf definieren Servern? (Spam Schutz)
-
-Preisfilter wenn ich die Daten gefiltert bekomme.
-
-
+    Preisfilter wenn ich die Daten gefiltert bekomme.
 
 
 
