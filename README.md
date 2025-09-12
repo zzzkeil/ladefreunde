@@ -11,6 +11,7 @@ Beschreibung usw. kommt noch ......
 
     ToDo:
     Preisfilter wenn ich die Daten gefiltert bekomme.
+    DSGVO......
 
 
 
