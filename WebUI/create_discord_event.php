@@ -28,6 +28,12 @@ if (empty($postData) || !isset($postData['name']) || !isset($postData['date']) |
     exit;
 }
 
+if (empty($postData) || !isset($postData['poi_id'])) {
+    http_response_code(400);
+    echo json_encode(['status' => 'error', 'message' => 'Incomplete event data received. Missing POI ID.']);
+    exit;
+}
+
 try {
     $timezone = new DateTimeZone('Europe/Berlin');
     $dateTimeStr = $postData['date'] . ' ' . $postData['time'];
@@ -48,10 +54,12 @@ $streetAddress = trim($postData['street'] . ' ' . $postData['housenumber']);
 $cityAddress = trim($postData['postalcode'] . ' ' . $postData['city']);
 $fullLocation = trim("$streetAddress, $cityAddress");
 $creatorUsername = $_SESSION['discord_user']->username;
+$poi_id = $postData['poi_id'];
 $eventDescription = "". ":round_pushpin: Adresse      :  " . $fullLocation . "\n"
                     . ":pencil: Ersteller     :  " . $creatorUsername . "\n"
                     . ":point_right: Mehr Details hier klicken :point_left: \n\n"
-                    . ":date: Erstellt am     :   " . $creationTimestamp . "\n";
+                    . ":date: Erstellt am     :   " . $creationTimestamp
+                    . "\n\n[ref:poi_{$poi_id}]";
 
 $payload = json_encode([
     'name' => $name,
