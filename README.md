@@ -5,9 +5,11 @@ Beschreibung usw. kommt noch ......
 
 
 
-ToDo:
+    ToDo:
 geplante Events anzeigen.
+
 Nur für Discord User auf definieren Servern? (Spam Schutz)
+
 Preisfilter wenn ich die Daten gefiltert bekomme.
 
 
