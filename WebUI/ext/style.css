@@ -1,0 +1,516 @@
+/* Made by zzzkeil - https://github.com/zzzkeil
+ * /* Free to use, modify, share.
+ * /* MIT License .....
+ * /* Thanks go also to Gemini, ChatGPT, and some local LLM
+ *
+ * /* General Body Styles */
+ body {
+     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+     background-color: #f4f7f9;
+     color: #333;
+     margin: 0;
+     height: 100vh;
+     overflow: hidden;
+ }
+
+ /* Main two-column layout */
+ .main-container {
+     display: flex;
+     height: 100%;
+ }
+
+ /* Left Side: Combined Panel for Search and Info */
+ .search-panel {
+     width: 450px;
+     flex-shrink: 0;
+     background-color: #ffffff;
+     box-shadow: 4px 0 15px rgba(0, 0, 0, 0.08);
+     z-index: 10;
+     display: flex;
+     flex-direction: column;
+ }
+
+ /* Upper part of left panel - search area */
+ .search-content {
+     padding: 30px;
+     flex-shrink: 0;
+ }
+
+ /* Lower part of left panel - info display area */
+ .left-info-display {
+     flex-grow: 1;
+     background-color: #2c3e50;
+     color: #ecf0f1;
+     padding: 20px 30px;
+     box-sizing: border-box;
+     overflow-y: auto;
+ }
+
+ h1 {
+     margin-bottom: 0.2em;
+     color: #2c3e50;
+     text-align: center;
+     font-size: 1.5em;
+ }
+
+ h2 {
+     margin-bottom: 0.2em;
+     color: #2c3e50;
+     text-align: center;
+     font-size: 1.2em;
+ }
+
+ h3 {
+     margin-bottom: 0.2em;                   
+     color: #2c3e50;
+     text-align: center;
+     font-size: 1.1m;
+ }
+
+ h4 {
+     margin-bottom: 0.2em;
+     color: #2c3e50;
+     text-align: center;
+ }
+
+ p {
+     text-align: center;
+     color: #7f8c8d;
+     margin-bottom: 5px;
+ }
+
+ /* Search box and suggestions styling */
+ .search-box-wrapper {
+     position: relative;
+ }
+
+ #search-box {
+ width: 100%;
+ padding: 12px 15px;
+ font-size: 16px;
+ border: 1px solid #ccc;
+ border-radius: 5px;
+ box-sizing: border-box;
+ transition: border-color 0.3s;
+ }
+
+ #search-box:focus {
+ border-color: #3498db;
+ outline: none;
+ }
+
+ #suggestion-box {
+ display: none;
+ position: absolute;
+ border: 1px solid #ddd;
+ border-top: none;
+ max-height: 300px;
+ overflow-y: auto;
+ background-color: #fff;
+ width: 100%;
+ box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+ z-index: 99;
+ border-radius: 0 0 5px 5px;
+ }
+
+ #suggestion-box ul {
+ list-style-type: none;
+ margin: 0;
+ padding: 0;
+ }
+
+ #suggestion-box li {
+ padding: 10px 15px;
+ cursor: pointer;
+ border-bottom: 1px solid #f0f0f0;
+ }
+
+ #suggestion-box li:last-child {
+ border-bottom: none;
+ }
+
+ #suggestion-box li:hover {
+ background-color: #ecf0f1;
+ }
+
+ #suggestion-box p {
+ padding: 10px 15px;
+ margin: 0;
+ color: #95a5a6;
+ text-align: left;
+ }
+
+ /* Right Side: Map Panel - now takes full right side */
+ .map-panel {
+     flex-grow: 1;
+     display: flex;
+     flex-direction: column;
+ }
+
+ #map {
+     height: 100%; /* Full height of right panel */
+     width: 100%;
+     background-color: #e0e0e0;
+ }
+
+ /* Hide the original info-display on desktop */
+ #info-display {
+     display: none;
+ }
+
+ /* Styles for the left info display */
+ .left-info-display h3 {
+     margin-top: 0;
+     margin-bottom: 15px;
+     color: #3498db;
+     border-bottom: 1px solid #34495e;
+     padding-bottom: 10px;
+ }
+
+ .left-info-display p {
+     text-align: left;
+     margin: 15px 0;
+ }
+
+ /* Grid layout for structured info */
+ .info-grid {
+     display: grid;
+     grid-template-columns: 120px 1fr;
+     gap: 10px 15px;
+     font-size: 15px;
+ }
+
+ .info-grid span:nth-child(odd) {
+     font-weight: bold;
+     color: #95a5a6;
+ }
+
+ .info-grid span:nth-child(even) {
+     color: #ecf0f1;
+ }
+
+ .discord-button {
+     display: block;
+     width: 100%;
+     padding: 12px;
+     margin-top: 20px;
+     font-size: 16px;
+     font-weight: bold;
+     color: #fff;
+     background-color: #5865F2;
+     border: none;
+     border-radius: 5px;
+     cursor: pointer;
+     transition: background-color 0.2s;
+ }
+
+ .discord-button:hover {
+     background-color: #4f5bda;
+ }
+
+ .discord-button:disabled {
+     background-color: #99AAB5;
+     cursor: not-allowed;
+ }
+
+ #discord-status {
+ margin-top: 15px;
+ font-weight: bold;
+ text-align: center;
+ }
+
+ .left-info-display h4 {
+     margin-top: 25px;
+     margin-bottom: 10px;
+     color: #bdc3c7;
+     border-bottom: 1px solid #34495e;
+     padding-bottom: 5px;
+     font-weight: normal;
+ }
+
+ .schedule-grid {
+     display: grid;
+     grid-template-columns: 120px 1fr;
+     gap: 12px;
+     align-items: center;
+ }
+
+ .schedule-grid label {
+     font-weight: bold;
+     color: #95a5a6;
+ }
+
+ .schedule-grid input[type="date"],
+.schedule-grid input[type="time"] {
+    width: 100%;
+    padding: 8px;
+    background-color: #34495e;
+    border: 1px solid #4a6278;
+    color: #ecf0f1;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 15px;
+}
+
+.login-body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.login-container {
+    background-color: #fff;
+    padding: 40px;
+    border-radius: 8px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    text-align: center;
+    max-width: 450px;
+}
+
+.discord-login-button {
+    display: inline-block;
+    padding: 12px 25px;
+    margin-top: 20px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    background-color: #5865F2;
+    border: none;
+    border-radius: 5px;
+    text-decoration: none;
+    transition: background-color 0.2s;
+}
+
+.discord-login-button:hover {
+    background-color: #4f5bda;
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    background-color: #f0f2f5;
+    padding: 10px;
+    border-radius: 8px;
+    margin-bottom: 25px;
+}
+
+.user-info img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    margin-right: 12px;
+}
+
+.user-info span {
+    font-weight: bold;
+    color: #2c3e50;
+}
+
+.logout-link {
+    margin-left: auto;
+    font-size: 14px;
+    color: #7f8c8d;
+    text-decoration: none;
+}
+
+.logout-link:hover {
+    text-decoration: underline;
+}
+
+.gdpr-notice {
+    position: fixed;
+    bottom: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+
+    font-size: 13px;
+    color: #4f5660;
+    background-color: #f0f2f5;
+    border: 1px solid #dfe3e8;
+    border-radius: 5px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    margin-top: 25px;
+    text-align: center;
+    text-align: left;
+    z-index: 1000;
+}
+
+.gdpr-notice p {
+    text-align: center;
+    margin: 0 0 1px 0;
+    color: #4f5660;
+    line-height: 1.5;
+}
+
+.gdpr-notice p:last-child {
+    margin-bottom: 0;
+}
+
+.gdpr-notice strong {
+    color: #1e2124;
+}
+
+/* Events vorhanden */
+.legend {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #e0e0e0;
+}
+
+.legend h4 {
+    margin-top: 0;
+    margin-bottom: 15px;
+    color: #2c3e50;
+}
+
+.legend-item {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 10px;
+}
+
+.legend-item img {
+    width: 20px;
+    height: auto;
+    margin-right: 10px;
+}
+
+/* ---------------------------------- */
+/* Responsive Design for Mobile/Tablet */
+/* ---------------------------------- */
+
+@media (max-width: 1024px) {
+    body {
+        height: auto;
+        overflow: auto;
+    }
+
+    .main-container {
+        flex-direction: column;
+        height: auto;
+    }
+
+    .search-panel {
+        width: 100%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        padding: 20px;
+        box-sizing: border-box;
+        height: auto;
+        overflow-y: visible;
+        z-index: 20;
+        flex-direction: column;
+    }
+
+    /* Show search content normally on mobile */
+    .search-content {
+        padding: 0;
+    }
+
+    /* Hide left info display on mobile */
+    .left-info-display {
+        display: none;
+    }
+
+    .map-panel {
+        flex-direction: column-reverse;
+        height: auto;
+        z-index: 10;
+    }
+
+    #map {
+        height: 50vh;
+        z-index: 10;
+    }
+
+    /* Show original info display on mobile */
+    #info-display {
+        display: block;
+        height: auto;
+        background-color: #2c3e50;
+        color: #ecf0f1;
+        padding: 20px 30px;
+        box-sizing: border-box;
+        overflow-y: visible;
+    }
+
+    #info-display h3 {
+        margin-top: 0;
+        margin-bottom: 15px;
+        color: #3498db;
+        border-bottom: 1px solid #34495e;
+        padding-bottom: 10px;
+    }
+
+    #info-display p {
+        text-align: left;
+        margin: 15px 0;
+    }
+
+    #info-display h4 {
+        margin-top: 25px;
+        margin-bottom: 10px;
+        color: #bdc3c7;
+        border-bottom: 1px solid #34495e;
+        padding-bottom: 5px;
+        font-weight: normal;
+    }
+
+    h1 { font-size: 1.6em; }
+    h2 { font-size: 1.2em; }
+    h3 { font-size: 1.1em; }
+
+    #search-box {
+        font-size: 1em;
+    }
+
+    .login-container {
+        width: 90%;
+        padding: 20px;
+    }
+
+    .gdpr-notice {
+        position: fixed;
+        bottom: 2;
+        left: 50%;
+        width: 90%;
+
+        font-size: 13px;
+        color: #4f5660;
+        background-color: #f0f2f5;
+        border: 1px solid #dfe3e8;
+        border-radius: 5px;
+        padding: 20px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        margin-top: 2px;
+        text-align: center;
+        text-align: center;
+        z-index: 1000;
+    }
+}
+
+/* Adjustments for smaller phone screens */
+@media (max-width: 480px) {
+    .search-content {
+        padding: 0;
+    }
+
+    h1 { font-size: 1.4em; }
+    h2 { font-size: 1.0em; }
+
+    .user-info span {
+        font-size: 0.9em;
+    }
+
+    .discord-login-button, .discord-button {
+        font-size: 1em;
+        padding: 12px 20px;
+    }
+
+    .info-grid, .schedule-grid {
+        grid-template-columns: 100px 1fr;
+        font-size: 14px;
+    }
+}
