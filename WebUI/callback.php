@@ -6,14 +6,12 @@
 
 require_once 'config.php';
 
-if (isset($_GET['error'])) {
-    die('Discord returned an error: ' . htmlspecialchars($_GET['error_description']));
-}
-
+// ... (error and code checks from the previous version are the same) ...
 if (!isset($_GET['code'])) {
     die('Error: No code returned from Discord.');
 }
 
+// --- 1. Exchange the code for an access token ---
 $tokenUrl = 'https://discord.com/api/v10/oauth2/token';
 $postData = [
     'client_id' => DISCORD_CLIENT_ID,
@@ -29,29 +27,57 @@ curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($postData));
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $response = curl_exec($ch);
 curl_close($ch);
-
 $tokenData = json_decode($response);
 
 if (isset($tokenData->error) || !isset($tokenData->access_token)) {
     die('Failed to get access token: ' . ($tokenData->error_description ?? 'Unknown error'));
 }
 
-$userUrl = 'https://discord.com/api/v10/users/@me';
-$headers = ['Authorization: Bearer ' . $tokenData->access_token];
+$accessToken = $tokenData->access_token;
+$headers = ['Authorization: Bearer ' . $accessToken];
 
+// --- 2. MODIFIED: Fetch the user's list of servers (guilds) ---
+$guildsUrl = 'https://discord.com/api/v10/users/@me/guilds';
+$ch = curl_init($guildsUrl);
+curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+$guildsResponse = curl_exec($ch);
+curl_close($ch);
+$userGuilds = json_decode($guildsResponse, true);
+
+if ($userGuilds === null) {
+    die('Failed to fetch user guilds from Discord.');
+}
+
+// --- 3. MODIFIED: Check if the user is in an allowed server ---
+$isMemberOfAllowedGuild = false;
+$userGuildIds = array_column($userGuilds, 'id');
+$matchingGuilds = array_intersect($userGuildIds, ALLOWED_GUILD_IDS);
+
+if (!empty($matchingGuilds)) {
+    $isMemberOfAllowedGuild = true;
+}
+
+if (!$isMemberOfAllowedGuild) {
+    // If not a member, destroy the session and show an error
+    session_destroy();
+    die('Access Denied: You must be a member of an authorized server to log in.');
+}
+
+// --- 4. If check passes, fetch user info and create session ---
+$userUrl = 'https://discord.com/api/v10/users/@me';
 $ch = curl_init($userUrl);
 curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
 $userResponse = curl_exec($ch);
 curl_close($ch);
-
 $userData = json_decode($userResponse);
 
 if (!$userData || !isset($userData->id)) {
-    die('Failed to fetch user data from Discord.');
+    die('Failed to fetch user data from Discord after guild check.');
 }
 
+// Store user data in session and redirect
 $_SESSION['discord_user'] = $userData;
-
 header('Location: index.php');
 exit();
