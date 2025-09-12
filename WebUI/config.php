@@ -6,17 +6,28 @@
 
 session_start();
 
-// --- Deine Daten unten eintragen
-// --- Bekommt man auf https://discord.com/developers/
-// --- Suchmaschinen oder eine AI fragen, die erklären dir wie das geht, ist nicht schwer
-
-
-// --- DISCORD OAUTH2 CONFIGURATION  ---
+// --- Deine Daten unten eintragen 
+// --- Datenbank verbindung eintragen ---
+$db_host = '';
+$db_name = '';
+$db_user = '';
+$db_pass = '';
+//
+// --- Discord Daten eintragen ---
+// --- Daten bekommt man auf https://discord.com/developers
+// --- Suchmaschinen oder eine AI fragen, die helfen dir, ist nicht schwer
+// --- DISCORD OAUTH2 CONFIGURATION ---
 define('DISCORD_CLIENT_ID', '');
 define('DISCORD_CLIENT_SECRET', '');
-define('DISCORD_REDIRECT_URI', 'https://zum.beispieldomain.yxz/verzeichnis/callback.php'); // Muss 100 Prozent passen!
-
-// --- DISCORD BOT CONFIGURATION  ---
+define('DISCORD_REDIRECT_URI', 'https://.../.../callback.php'); // Wichtig muss 100% passen
+// --- DISCORD BOT CONFIGURATION ---
 $botToken = '';
 $guildId = '';
+
+// --- DISCORD login nur für User dieser Server erlauben  ---
+define('ALLOWED_GUILD_IDS', [
+    '',
+    '',
+    //'usw. f?r mehr',
+]);
 ?>
