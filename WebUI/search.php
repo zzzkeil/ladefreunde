@@ -4,11 +4,7 @@
 /* MIT License .....
 /* Thanks go also to Gemini, ChatGPT, and some local LLM */
 
-// --- DATABASE CONFIGURATION ---
-$db_host = '127.0.0.1'; //oder localhost, oder...
-$db_name = 'der_db_name';
-$db_user = 'der_username';
-$db_pass = 'das_sichere_passwort';
+require_once 'config.php';
 
 header('Content-Type: application/json');
 
@@ -31,7 +27,7 @@ $term = $_GET['term'];
 $suggestions = [];
 
 $query = "
-    SELECT name, streetname, housenumber, postalcode, city, latitude, longitude
+    SELECT id, name, streetname, housenumber, postalcode, city, latitude, longitude
     FROM pois
     WHERE name LIKE ?
        OR streetname LIKE ?
@@ -59,6 +55,7 @@ if ($stmt = $conn->prepare($query)) {
         $display_html = preg_replace('/(' . preg_quote($term, '/') . ')/i', '<b>$1</b>', $display_html);
 
         $suggestions[] = [
+            'id'           => $row['id'],
             'name'         => htmlspecialchars($row['name']),
             'street'       => htmlspecialchars($row['streetname']),
             'housenumber'  => htmlspecialchars($row['housenumber']),

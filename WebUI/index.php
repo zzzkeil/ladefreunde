@@ -29,16 +29,17 @@ if (!isset($_SESSION['discord_user'])) {
         <h1>Ladefreunde Event Map</h1>
         <p>Zugang zur Planung mit Discord Account.<br>Bitte über Discord einloggen.</p>
         <a href="<?php echo $authUrl; ?>" class="discord-login-button">Login mit Discord</a>
-    </div>
 
-    <div class="gdpr-notice">
-         <p><strong>DSGVO Info</strong></p>
-         <p>Mit klick auf Login, laden diese externe Dienste:</p>
-         <p>Login und Events Eintragungen: <b>discord.com</b></p>
-         <p>Anzeige der Karte: <b>openstreetmap.org</b></p>
-         <p><strong>Wenn du das nicht möchtest, nicht Login klicken ;)</strong></p>
-    </div>
-
+         <br><br>  
+         <p><small>
+         <strong>DSGVO Info</strong><br>
+                 Beim auf klick Login, werden <b>externe</b> Dienste geladen:<br>
+              <b>discord.com</b> und <b>openstreetmap.org</b><br>
+                 Benötigt zum Login und Anzeige der Karte.<br>
+         <strong>Wenn du das nicht möchtest, nicht Login klicken ;)</strong><br>
+                 Intern werden <b>keine</b> personenbezogene Daten verarbeitet.
+         </small></p>
+     </div>
 </body>
 </html>
 
@@ -61,7 +62,7 @@ $user = $_SESSION['discord_user'];
 -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ladefreunde Event Map</title>
+    <title>Ladefreunde Map</title>
     
     <link rel="stylesheet" href="ext/leaflet.css"/>
     <script src="ext/leaflet.js"></script>
@@ -95,23 +96,21 @@ $user = $_SESSION['discord_user'];
       </div>
     </div>
 
-    <!-- New left info display area for desktop -->
     <div class="left-info-display" id="left-info-display">
-      <p>Suche deine Ladestation oben im Suchfeld, dann stehen hier die Daten,<br>und der Knopf zum Eventeintragen auf Discord.</p>
+      <p><center>Bitte eine Ladestation auswählen,<br>um das Menü anzuzeigen.</center></p>
     </div>
   </div>
 
   <div class="map-panel">
     <div id="map"></div>
-    <!-- Original info display for mobile -->
     <div id="info-display">
-      <p>Suche deine Ladestation oben im Suchfeld, dann stehen hier die Daten,<br>und der Knopf zum Eventeintragen auf Discord.</p>
+      <p><center>Bitte eine Ladestation auswählen,<br>um das Menü anzuzeigen.</center></p>
     </div>
   </div>
 </div>
 
     <script>
-      const searchBox = document.getElementById('search-box');
+  const searchBox = document.getElementById('search-box');
   const suggestionBox = document.getElementById('suggestion-box');
   const infoDisplay = document.getElementById('info-display');
   const leftInfoDisplay = document.getElementById('left-info-display');
@@ -125,13 +124,11 @@ $user = $_SESSION['discord_user'];
   }).addTo(map);
   let currentMarker = null;
 
-  // Function to get the active info display based on screen size
   function getActiveInfoDisplay() {
       const isDesktop = window.innerWidth > 1024;
       return isDesktop ? leftInfoDisplay : infoDisplay;
   }
 
-  // Function to update info content in the correct display
   function updateInfoDisplay(content) {
       const activeDisplay = getActiveInfoDisplay();
       activeDisplay.innerHTML = content;
@@ -154,10 +151,12 @@ $user = $_SESSION['discord_user'];
 
           data.forEach(event => {
               const startTime = new Date(event.start_time);
+              const eventUrl = `https://discord.com/events/${event.guild_id}/${event.event_id}`;
               const popupContent = `
-              <b>${event.name}</b><br>
-              Zeit: ${startTime.toLocaleString('de-DE')}<br>
-              `;
+                <b>${event.name}</b><br>
+                Zeit: ${startTime.toLocaleString('de-DE')}<br>
+                <a href="${eventUrl}" target="_blank" class="popup-link">Event in Discord öffnen</a>
+            `;
 
               const marker = L.marker([event.latitude, event.longitude], { icon: eventIcon })
               .bindPopup(popupContent);
@@ -250,7 +249,6 @@ $user = $_SESSION['discord_user'];
       }
   });
 
-  // Event delegation for both info displays
   document.addEventListener('click', function(e) {
       if (e.target.id === 'discord-event-btn') {
           const eventDate = document.getElementById('event-date').value;
@@ -310,9 +308,7 @@ $user = $_SESSION['discord_user'];
       }
   });
 
-  // Handle window resize to ensure correct info display is used
   window.addEventListener('resize', function() {
-      // Trigger a re-render of info if there's selected data
       if (selectedPoiData) {
           const currentContent = getActiveInfoDisplay().innerHTML;
           if (currentContent.includes('<h3>') && !currentContent.includes('Suche deine Ladestation')) {
@@ -330,7 +326,6 @@ $user = $_SESSION['discord_user'];
                   lon: selectedPoiData.longitude
               };
               
-              // Manually trigger the content update without changing the map
               const streetAddress = [selectedPoiData.street, selectedPoiData.housenumber].filter(Boolean).join(' ');
               const cityAddress = [selectedPoiData.postalcode, selectedPoiData.city].filter(Boolean).join(' ');
               const now = new Date();

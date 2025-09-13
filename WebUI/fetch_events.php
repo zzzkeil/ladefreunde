@@ -40,6 +40,7 @@ $sql = "SELECT latitude, longitude FROM pois WHERE id = ?";
 foreach ($discordEvents as $event) {
     if (isset($event['description']) && preg_match('/\[ref:poi_(\d+)\]/', $event['description'], $matches)) {
         $poi_id = (int)$matches[1];
+
         if ($stmt = $conn->prepare($sql)) {
             $stmt->bind_param("i", $poi_id);
             $stmt->execute();
@@ -48,9 +49,10 @@ foreach ($discordEvents as $event) {
                 $eventsWithCoords[] = [
                     'name' => $event['name'],
                     'start_time' => $event['scheduled_start_time'],
-                    'description' => $event['description'],
                     'latitude' => $coords['latitude'],
                     'longitude' => $coords['longitude'],
+                    'event_id' => $event['id'],
+                    'guild_id' => $event['guild_id'],
                 ];
             }
             $stmt->close();

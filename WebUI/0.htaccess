@@ -1,0 +1,8 @@
+RewriteEngine On
+RewriteCond %{THE_REQUEST} ^[A-Z]{3,9}\ /.*index\.html\ HTTP/
+RewriteRule ^index\.html$ https://zzzkeil.de/ben/index.php [R=301,L]
+
+#AuthType Basic
+#AuthName "Restricted Files"
+#AuthUserFile "/home/zzzkeil/.htpasswd"
+#Require valid-user

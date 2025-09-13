@@ -92,6 +92,7 @@
  border-radius: 5px;
  box-sizing: border-box;
  transition: border-color 0.3s;
+ text-align: center;
  }
 
  #search-box:focus {
@@ -376,6 +377,17 @@
     width: 20px;
     height: auto;
     margin-right: 10px;
+}
+
+
+.popup-link {
+    color: #0078A8;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.popup-link:hover {
+    text-decoration: underline;
 }
 
 /* ---------------------------------- */
