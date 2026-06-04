@@ -1,18 +1,5 @@
-## 2026.02.27 - no more discord support form me.....
-# ladefreunde
-Aus der Gerd Bremer Ad Hoc Map, Laaaadeerleeebnis :)  mit Discord planen .... 
+---
 
-Beschreibung usw. kommt noch ......
+## 🌍 Moved to  [codeberg.org](https://codeberg.org/zzzkeil/ladefreunde)
 
-
-    Erledigt:
-    ✅ Geplante Events anzeigen.
-    ✅ Nur für Discord User auf definieren Servern? (Spam Schutz)
-    ✅ DSGVO...... 
-
-    ToDo:
-    Preisfilter wenn ich die Daten gefiltert bekomme.
-    
-
-mfg
-keil
+---
